@@ -1,4 +1,10 @@
 import { Routes } from '@angular/router';
 import { Login } from './components/login/login';
+import { Register } from './components/register/register';
+import { Jobs } from './components/jobs/jobs';
 
-export const routes: Routes = [{ path: 'login', component: Login }];
+export const routes: Routes = [
+  { path: 'login', component: Login },
+  { path: 'jobs', component: Jobs },
+  { path: 'register', component: Register },
+];

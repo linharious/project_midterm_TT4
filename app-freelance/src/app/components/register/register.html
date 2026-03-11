@@ -1,0 +1,39 @@
+<h1>Register</h1>
+<form (ngSubmit)="submit()">
+  <label>
+    Name
+    <input [(ngModel)]="name" name="name" type="name" />
+  </label>
+
+  <label>
+    Username
+    <input [(ngModel)]="username" name="username" type="name" />
+  </label>
+
+  <label>
+    Email
+    <input [(ngModel)]="email" name="email" type="email" />
+  </label>
+
+  <label>
+    Password
+    <input [(ngModel)]="password" name="password" type="password" />
+  </label>
+
+  <label>
+    Bio
+    <input [(ngModel)]="bio" name="bio" type="text" />
+  </label>
+
+  <label>
+    Skills
+    <input [(ngModel)]="skills" name="skills" type="text" />
+  </label>
+
+  <div class="error">
+    {{ errorMsg }}
+  </div>
+
+  <button type="submit()">Sign Up</button>
+  <p>Already has an account (?) <a routerLink="/login">Login</a></p>
+</form>
