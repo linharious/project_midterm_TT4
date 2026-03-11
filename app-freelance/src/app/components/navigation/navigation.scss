@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+$pixel-size: 3px;
+$bg-color: #000;
+$fg-color: #fff;
+
+:host {
+  display: block;
+  font-family: 'Press Start 2P', system-ui, monospace;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 20px;
+  background-color: $bg-color;
+  color: $fg-color;
+  margin: 0;
+  
+  box-shadow: 
+    0 -#{$pixel-size} 0 0 $bg-color,
+    -#{$pixel-size} 0 0 0 $bg-color,
+    #{$pixel-size} 0 0 0 $bg-color,
+    0 #{$pixel-size} 0 0 $bg-color;
+}
+
+.navbar-brand {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+  color: $bg-color;
+  background-color: $fg-color;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 10px 15px;
+  margin-right: auto; // Pushes the other items to the right
+
+  // Pixel cut out corners for the brand "logo"
+  clip-path: polygon(
+    #{$pixel-size} 0, 
+    calc(100% - #{$pixel-size}) 0, 
+    100% #{$pixel-size}, 
+    100% calc(100% - #{$pixel-size}), 
+    calc(100% - #{$pixel-size}) 100%, 
+    #{$pixel-size} 100%, 
+    0 calc(100% - #{$pixel-size}), 
+    0 #{$pixel-size}
+  );
+
+  &:hover {
+    background-color: #ccc;
+  }
+}
+
+.nav-link {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  color: $fg-color;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  
+  &:hover, &.active {
+    background-color: $fg-color;
+    color: $bg-color;
+  }
+}
+
+.nav-user {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  color: $fg-color;
+  text-transform: uppercase;
+}
+
+button {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  color: $bg-color;
+  background-color: $fg-color;
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  text-transform: uppercase;
+  
+  clip-path: polygon(
+    #{$pixel-size} 0, 
+    calc(100% - #{$pixel-size}) 0, 
+    100% #{$pixel-size}, 
+    100% calc(100% - #{$pixel-size}), 
+    calc(100% - #{$pixel-size}) 100%, 
+    #{$pixel-size} 100%, 
+    0 calc(100% - #{$pixel-size}), 
+    0 #{$pixel-size}
+  );
+
+  &:hover {
+    background-color: #ccc;
+  }
+  
+  &:active {
+    transform: translateY(2px);
+  }
+}

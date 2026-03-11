@@ -21,6 +21,8 @@ export interface User {
 })
 export class Auth {
   private readonly apiUrl = 'https://stingray-app-wxhhn.ondigitalocean.app';
+
+  private currentUser: User | null = null;
   constructor(private readonly http: HttpClient) {}
 
   login(email: string, password: string): Observable<AuthResponse> {
@@ -55,5 +57,18 @@ export class Auth {
 
   clearToken() {
     localStorage.removeItem('token');
+  }
+
+  getAuthHeaders() {
+    const token = this.getToken();
+    return { Authorization: `Bearer ${token}` };
+  }
+
+  setCurrentUser(user: User) {
+    this.currentUser = user;
+  }
+
+  getCurrentUser(): User | null {
+    return this.currentUser;
   }
 }

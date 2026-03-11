@@ -1,0 +1,15 @@
+<nav class="navbar">
+  <a routerLink="/jobs" class="navbar-brand"> Freeloncee </a>
+
+  <ng-container *ngIf="isLoggedIn">
+    <a routerLink="/jobs/search" routerLinkActive="active" class="nav-link">Jobs</a>
+    <a routerLink="/jobs" routerLinkActive="active" class="nav-link">New Job</a>
+    <span routerLinkActive="active" class="nav-user"> Hello, {{ currentUser?.name }} </span>
+    <button (click)="logout()" class>Logout</button>
+  </ng-container>
+
+  <ng-container *ngIf="!isLoggedIn">
+    <a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
+    <a routerLink="/register" routerLinkActive="active" class="nav-link">Register</a>
+  </ng-container>
+</nav>

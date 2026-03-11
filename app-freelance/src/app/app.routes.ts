@@ -5,9 +5,6 @@ import { Jobs } from './components/jobs/jobs';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
-  {
-    path: 'register',
-    component: Register,
-  },
   { path: 'jobs', component: Jobs },
+  { path: 'register', component: Register },
 ];

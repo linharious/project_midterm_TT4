@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+$pixel-size: 3px;
+$bg-color: #fff;
+$fg-color: #000;
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #fff; 
+  font-family: 'Press Start 2P', system-ui, monospace;
+  color: $fg-color;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+h1 {
+  display: none;
+}
+
+form {
+  position: relative;
+  width: 100%;
+  max-width: 380px; 
+  background-color: $bg-color;
+  padding: 24px; 
+  margin: 20px;
+  
+  box-shadow: 
+    0 -#{$pixel-size} 0 0 $fg-color,
+    -#{$pixel-size} 0 0 0 $fg-color,
+    #{$pixel-size} 0 0 0 $fg-color,
+    0 #{$pixel-size} 0 0 $fg-color;
+
+  &::before {
+    content: "x";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px; 
+    background-color: $fg-color;
+    color: $bg-color;
+    font-size: 16px; 
+    line-height: 30px;
+    padding-left: 12px;
+    text-transform: uppercase;
+  }
+
+  padding-top: 50px; 
+
+  label {
+    display: block;
+    font-size: 10px; 
+    text-transform: uppercase;
+    text-align: left;
+    line-height: 1.5;
+    margin-bottom: 20px; 
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    margin-top: 10px; 
+    padding: 10px; 
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px; 
+    
+    background-color: $fg-color;
+    color: $bg-color;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+
+    clip-path: polygon(
+      #{$pixel-size} 0, 
+      calc(100% - #{$pixel-size}) 0, 
+      100% #{$pixel-size}, 
+      100% calc(100% - #{$pixel-size}), 
+      calc(100% - #{$pixel-size}) 100%, 
+      #{$pixel-size} 100%, 
+      0 calc(100% - #{$pixel-size}), 
+      0 #{$pixel-size}
+    );
+    
+    &:focus {
+      background-color: #ddd;
+    }
+  }
+
+  .error {
+    color: $fg-color;
+    font-size: 8px; 
+    margin-top: 10px;
+    text-align: center;
+    min-height: 10px;
+  }
+
+  button[type="submit"] {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px; 
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px; 
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: center;
+
+    background-color: $fg-color;
+    color: $bg-color;
+    border: none;
+    box-sizing: border-box;
+    
+    clip-path: polygon(
+      #{$pixel-size} 0, 
+      calc(100% - #{$pixel-size}) 0, 
+      100% #{$pixel-size}, 
+      100% calc(100% - #{$pixel-size}), 
+      calc(100% - #{$pixel-size}) 100%, 
+      #{$pixel-size} 100%, 
+      0 calc(100% - #{$pixel-size}), 
+      0 #{$pixel-size}
+    );
+
+    &:hover {
+      background-color: #ccc;
+    }
+    
+    &:active {
+      transform: translateY(2px);
+    }
+  }
+
+  p {
+    text-align: center;
+    font-size: 8px; 
+    margin-top: 25px;
+    line-height: 2;
+
+    a {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 12px; 
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px; 
+      text-transform: uppercase;
+      color: $fg-color;
+      background-color: $bg-color;
+      text-decoration: none;
+
+      box-shadow: 
+        0 -#{$pixel-size} 0 0 $fg-color,
+        -#{$pixel-size} 0 0 0 $fg-color,
+        #{$pixel-size} 0 0 0 $fg-color,
+        0 #{$pixel-size} 0 0 $fg-color;
+        
+      margin-left: 5px;
+      margin-right: 5px;
+
+      &:hover {
+        background-color: $fg-color;
+        color: $bg-color;
+      }
+      
+      &:active {
+        transform: translateY(2px);
+      }
+    }
+  }
+}
