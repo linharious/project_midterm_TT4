@@ -98,10 +98,16 @@ form {
     min-height: 10px;
   }
 
-  button[type="submit"] {
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  button[type="submit"], .btn-guest {
     display: block;
     width: 100%;
-    margin-top: 10px;
     padding: 12px; 
     font-family: 'Press Start 2P', cursive;
     font-size: 12px; 
@@ -131,6 +137,18 @@ form {
     
     &:active {
       transform: translateY(2px);
+    }
+  }
+
+  .btn-guest {
+    background-color: transparent;
+    color: $fg-color;
+    border: $pixel-size solid $fg-color;
+    // Specific clip-path to accommodate borders if needed, or rely on outline
+    clip-path: none; 
+    
+    &:hover {
+      background-color: #f0f0f0;
     }
   }
 

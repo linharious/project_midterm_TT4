@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface AuthResponse {
-  access_token: string;
+  token: string;
   user: User;
 }
 
@@ -23,7 +23,14 @@ export class Auth {
   private readonly apiUrl = 'https://stingray-app-wxhhn.ondigitalocean.app';
 
   private currentUser: User | null = null;
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {
+    const saved = sessionStorage.getItem('currentUser');
+    if (saved) {
+      try {
+        this.currentUser = JSON.parse(saved);
+      } catch (e) {}
+    }
+  }
 
   login(email: string, password: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, { email, password });
@@ -48,15 +55,17 @@ export class Auth {
   }
 
   setToken(token: string) {
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 
   clearToken() {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('currentUser');
+    this.currentUser = null;
   }
 
   getAuthHeaders() {
@@ -66,6 +75,7 @@ export class Auth {
 
   setCurrentUser(user: User) {
     this.currentUser = user;
+    sessionStorage.setItem('currentUser', JSON.stringify(user));
   }
 
   getCurrentUser(): User | null {

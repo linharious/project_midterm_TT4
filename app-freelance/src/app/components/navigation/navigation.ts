@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, inject } from '@angular/core';
 import { Auth, User } from '../../services/auth';
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -14,6 +14,7 @@ export class Navigation implements OnInit, OnDestroy {
   currentUser: User | null = null;
   isLoggedIn = false;
   private sub?: Subscription;
+  private cdr = inject(ChangeDetectorRef);
 
   constructor(
     private readonly auth: Auth,
@@ -42,5 +43,6 @@ export class Navigation implements OnInit, OnDestroy {
   updateAuthState() {
     this.currentUser = this.auth.getCurrentUser();
     this.isLoggedIn = !!this.auth.getToken();
+    this.cdr.detectChanges();
   }
 }

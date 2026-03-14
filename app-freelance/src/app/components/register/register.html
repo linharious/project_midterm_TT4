@@ -26,14 +26,14 @@
   </label>
 
   <label>
-    Skills
-    <input [(ngModel)]="skills" name="skills" type="text" />
+    Skills (comma separated)
+    <input [(ngModel)]="skillsStr" name="skills" type="text" />
   </label>
 
   <div class="error">
     {{ errorMsg }}
   </div>
 
-  <button type="submit()">Sign Up</button>
+  <button type="submit">Sign Up</button>
   <p>Already has an account (?) <a routerLink="/login">Login</a></p>
 </form>
