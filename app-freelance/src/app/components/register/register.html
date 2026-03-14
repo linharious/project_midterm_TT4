@@ -32,6 +32,11 @@
 
   <div class="error">
     {{ errorMsg }}
+    @if (suggestedUsername) {
+      <div class="suggestion">
+        Username already taken. Suggested: <strong>{{ suggestedUsername }}</strong>
+      </div>
+    }
   </div>
 
   <button type="submit()">Sign Up</button>
