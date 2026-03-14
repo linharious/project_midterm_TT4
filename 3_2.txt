@@ -1,0 +1,43 @@
+API Base URL
+
+https://stingray-app-wxhhn.ondigitalocean.app
+
+
+Proposals + reviews / freelancer features
+
+
+
+"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWIwNThmNTU3ZmJiMmIzM2QwNzRlMjIiLCJleHAiOjE3NzM1MzMwNzB9.ExF5FXC2H6z-5BiqQA1sNxDRYqfS6jsKEOKsAB3Rh68
+
+
+Proposals API 
+
+https://refc80-2621429.postman.co/workspace/Raul-Francia's-Workspace~6e5307ae-7808-4e64-81d7-0820dfaeab87/request/53082686-4b13c787-76d9-493a-a088-ea3873bb21ba?action=share&creator=53082686
+
+
+
+Accept_proposal API
+
+https://refc80-2621429.postman.co/workspace/Raul-Francia's-Workspace~6e5307ae-7808-4e64-81d7-0820dfaeab87/request/53082686-415372c4-2ec7-4219-a6c8-137e58860db2?action=share&creator=53082686
+
+
+
+get_my_bids API
+
+https://refc80-2621429.postman.co/workspace/Raul-Francia's-Workspace~6e5307ae-7808-4e64-81d7-0820dfaeab87/request/53082686-3c0508ac-ba55-4597-a67a-540f63cbfde8?action=share&creator=53082686
+
+
+delete_proposal API
+
+https://refc80-2621429.postman.co/workspace/Raul-Francia's-Workspace~6e5307ae-7808-4e64-81d7-0820dfaeab87/request/53082686-474dcd59-cf18-4397-b7d0-0219c0103fe6?action=share&creator=53082686
+
+
+Freelance_Marketplace API
+
+https://refc80-2621429.postman.co/workspace/Raul-Francia's-Workspace~6e5307ae-7808-4e64-81d7-0820dfaeab87/request/53082686-d1c80d3c-dbf2-43d5-a673-d40b9aefc613?action=share&creator=53082686
+
+
+Platform_Endpoints API
+
+https://refc80-2621429.postman.co/workspace/Raul-Francia's-Workspace~6e5307ae-7808-4e64-81d7-0820dfaeab87/request/53082686-9707704f-95cd-488f-bc20-ac7362e5b0a6?action=share&creator=53082686
+
