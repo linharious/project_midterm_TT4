@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../../services/auth';
@@ -16,27 +16,47 @@ export class Register {
   email = '';
   password = '';
   bio = '';
-  skills = [];
+  skillsStr = '';
 
   errorMsg = '';
+  private cdr = inject(ChangeDetectorRef);
   constructor(
     private readonly auth: Auth,
     private readonly router: Router,
   ) {}
 
   submit() {
+    this.errorMsg = '';
+
+    if (!this.name || !this.username || !this.email || !this.password) {
+      this.errorMsg = 'Name, username, email, and password are required.';
+      return;
+    }
+
+    const skillsArray = this.skillsStr
+      .split(',')
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
+
     this.auth
-      .register(this.name, this.username, this.email, this.password, this.bio, this.skills)
+      .register(this.name, this.username, this.email, this.password, this.bio, skillsArray)
       .subscribe({
         next: (res) => {
           console.log(res);
           this.router.navigate(['/login']);
+          this.cdr.detectChanges();
         },
         error: (err) => {
-          this.errorMsg = err.error.error;
+          console.error(err);
+          if (err.error && err.error.message) {
+            this.errorMsg = err.error.message;
+          } else if (err.error && err.error.error) {
+            this.errorMsg = err.error.error;
+          } else {
+            this.errorMsg = 'Failed to register. Please try again.';
+          }
+          this.cdr.detectChanges();
         },
       });
   }
 }
-
-// name • username • email • password • bio • skills (array)

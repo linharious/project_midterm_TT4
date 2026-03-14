@@ -26,17 +26,18 @@ $fg-color: #fff;
     0 #{$pixel-size} 0 0 $bg-color;
 }
 
-.navbar-brand {
+.nav-link, button, .navbar-brand {
   font-family: 'Press Start 2P', cursive;
-  font-size: 14px;
+  font-size: 10px;
   color: $bg-color;
   background-color: $fg-color;
   text-decoration: none;
   text-transform: uppercase;
   padding: 10px 15px;
-  margin-right: auto; // Pushes the other items to the right
-
-  // Pixel cut out corners for the brand "logo"
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  
   clip-path: polygon(
     #{$pixel-size} 0, 
     calc(100% - #{$pixel-size}) 0, 
@@ -48,23 +49,19 @@ $fg-color: #fff;
     0 #{$pixel-size}
   );
 
-  &:hover {
+  &:hover, &.active {
     background-color: #ccc;
+    color: $bg-color;
+  }
+
+  &:active {
+    transform: translateY(2px);
   }
 }
 
-.nav-link {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 10px;
-  color: $fg-color;
-  text-decoration: none;
-  text-transform: uppercase;
-  padding: 8px 12px;
-  
-  &:hover, &.active {
-    background-color: $fg-color;
-    color: $bg-color;
-  }
+.navbar-brand {
+  font-size: 14px;
+  margin-right: auto;
 }
 
 .nav-user {
@@ -72,34 +69,5 @@ $fg-color: #fff;
   font-size: 10px;
   color: $fg-color;
   text-transform: uppercase;
-}
-
-button {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 10px;
-  color: $bg-color;
-  background-color: $fg-color;
-  border: none;
-  cursor: pointer;
-  padding: 10px 15px;
-  text-transform: uppercase;
-  
-  clip-path: polygon(
-    #{$pixel-size} 0, 
-    calc(100% - #{$pixel-size}) 0, 
-    100% #{$pixel-size}, 
-    100% calc(100% - #{$pixel-size}), 
-    calc(100% - #{$pixel-size}) 100%, 
-    #{$pixel-size} 100%, 
-    0 calc(100% - #{$pixel-size}), 
-    0 #{$pixel-size}
-  );
-
-  &:hover {
-    background-color: #ccc;
-  }
-  
-  &:active {
-    transform: translateY(2px);
-  }
+  margin: 0 10px;
 }

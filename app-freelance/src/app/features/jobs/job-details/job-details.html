@@ -1,0 +1,132 @@
+<div class="job-details-container">
+
+  <div class="navigation-bar">
+    <button class="btn btn-outline btn-sm" (click)="goBack()">← Back to Search</button>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading project details...</p>
+  </div>
+
+  <!-- Error Alert -->
+  <div class="alert alert-error" *ngIf="errorMessage && !isLoading">
+    <span class="icon">⚠️</span>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content-wrapper" *ngIf="job && !isLoading && !errorMessage">
+
+    <!-- View Mode -->
+    <main class="job-main-card" *ngIf="!isEditing">
+      <header class="card-header">
+        <div class="meta-tags">
+          <span class="category-badge">{{ job.category }}</span>
+          <span class="status-badge" [ngClass]="job.status">{{ job.status.replace('_', ' ') | titlecase }}</span>
+        </div>
+
+        <!-- Editable Actions (Only visible if the logged-in user is the owner) -->
+        <div class="owner-actions">
+          <button class="btn btn-secondary btn-sm" (click)="toggleEditMode()">Edit Job</button>
+          <button class="btn btn-success btn-sm" *ngIf="job.status === 'in_progress'" (click)="markAsCompleted()">
+            Mark as Completed
+          </button>
+        </div>
+      </header>
+
+      <h1 class="job-title">{{ job.title }}</h1>
+      <p class="job-budget">Budget: ${{ job.budget | number:'1.2-2' }}</p>
+
+      <div class="job-description-block">
+        <h3>Project Description</h3>
+        <p class="description-text">{{ job.description }}</p>
+      </div>
+
+      <div class="client-info-block" *ngIf="job.owner">
+        <h3>About the Client</h3>
+        <div class="client-card">
+          <div class="avatar">{{ job.owner.name.charAt(0) }}</div>
+          <div class="details">
+            <span class="name">{{ job.owner.name }}</span>
+            <span class="username">@{{ job.owner.username }}</span>
+            <span class="rating">⭐ {{ job.owner.rating_avg || 'No ratings yet' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="client-info-block freelancer-block" *ngIf="job.assigned_freelancer">
+        <h3>Assigned Freelancer</h3>
+        <div class="client-card">
+          <div class="avatar freelancer-avatar">{{ job.assigned_freelancer.name.charAt(0) }}</div>
+          <div class="details">
+            <span class="name">{{ job.assigned_freelancer.name }}</span>
+            <span class="username">@{{ job.assigned_freelancer.username }}</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Edit Mode -->
+    <main class="job-main-card edit-mode" *ngIf="isEditing">
+      <header class="card-header">
+        <h2>Edit Job Details</h2>
+        <button class="btn btn-outline btn-sm" (click)="toggleEditMode()">Cancel Edit</button>
+      </header>
+
+      <form (ngSubmit)="saveChanges()" class="edit-form">
+        <div class="form-group">
+          <label>Job Title</label>
+          <input type="text" [(ngModel)]="editFormData.title" name="title" required>
+        </div>
+
+        <div class="form-group">
+          <label>Category</label>
+          <input type="text" [(ngModel)]="editFormData.category" name="category" required>
+        </div>
+
+        <div class="form-group">
+          <label>Status</label>
+          <select [(ngModel)]="editFormData.status" name="status" required>
+            <option value="open">Open</option>
+            <option value="in_progress">In Progress</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Budget ($)</label>
+          <input type="number" [(ngModel)]="editFormData.budget" name="budget" required min="5">
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea [(ngModel)]="editFormData.description" name="description" rows="6" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving">
+          {{ isSaving ? 'Saving...' : 'Save Changes' }}
+        </button>
+      </form>
+    </main>
+
+    <!-- 
+      ======================================================================
+      INTEGRATION POINT: PERSON 3 (Proposals & Reviews) 
+      ======================================================================
+      Person 3, place your component for rendering the Proposal List 
+      OR the "Submit Proposal" form inside this section below.
+    -->
+    <aside class="proposals-sidebar" id="proposals-section-placeholder">
+      <div class="placeholder-content">
+        <h3>Proposals</h3>
+        <p class="integration-note">
+          <strong>Person 3:</strong> Inject your <code>&lt;app-proposals-list&gt;</code> or
+          <code>&lt;app-submit-proposal&gt;</code> component here.
+        </p>
+      </div>
+    </aside>
+
+  </div>
+</div>
