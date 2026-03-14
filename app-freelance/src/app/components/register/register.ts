@@ -37,8 +37,8 @@ export class Register {
 
     const skillsArray = this.skills
       .split(',')
-      .map(s => s.trim())
-      .filter(s => s.length > 0);
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
 
     this.auth
       .register(this.name, this.username, this.email, this.password, this.bio, skillsArray)
@@ -60,8 +60,16 @@ export class Register {
 
           if (err.error && err.error.suggested_username) {
             this.suggestedUsername = err.error.suggested_username;
+          } else if (
+            err.status === 409 ||
+            err.status === 400 ||
+            (err.error &&
+              typeof err.error.error === 'string' &&
+              err.error.error.toLowerCase().includes('already'))
+          ) {
+            const randomNum = Math.floor(Math.random() * 10000);
+            this.suggestedUsername = `${this.username}${randomNum}`;
           }
-          
           this.cdr.detectChanges();
         },
       });
