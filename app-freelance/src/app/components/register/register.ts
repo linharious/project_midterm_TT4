@@ -20,6 +20,9 @@ export class Register {
 
   errorMsg = '';
   suggestedUsername = '';
+  skillsStr = '';
+
+  errorMsg = '';
   private cdr = inject(ChangeDetectorRef);
   constructor(
     private readonly auth: Auth,
@@ -39,6 +42,10 @@ export class Register {
       .split(',')
       .map((s) => s.trim())
       .filter((s) => s.length > 0);
+    const skillsArray = this.skillsStr
+      .split(',')
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
 
     this.auth
       .register(this.name, this.username, this.email, this.password, this.bio, skillsArray)
@@ -46,6 +53,7 @@ export class Register {
         next: (res) => {
           console.log(res);
           this.router.navigate(['/login']);
+          this.cdr.detectChanges();
         },
         error: (err) => {
           this.errorMsg = err.error.error;
@@ -75,5 +83,3 @@ export class Register {
       });
   }
 }
-
-// name • username • email • password • bio • skills (array)

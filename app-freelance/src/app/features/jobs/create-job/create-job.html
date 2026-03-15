@@ -1,0 +1,79 @@
+<div class="create-job-container">
+  <div class="form-wrapper">
+
+    <header class="form-header">
+      <h1>Post a New Job</h1>
+      <p>Fill out the details below to find the perfect freelancer for your project.</p>
+    </header>
+
+    <!-- Global Alerts -->
+    <div class="alert alert-error" *ngIf="errorMessage">
+      <span class="icon">⚠️</span>
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <div class="alert alert-success" *ngIf="successMessage">
+      <span class="icon">✅</span>
+      <p>{{ successMessage }}</p>
+    </div>
+
+    <!-- The Form -->
+    <form [formGroup]="jobForm" (ngSubmit)="onSubmit()" class="job-form">
+
+      <!-- Title -->
+      <div class="form-group">
+        <label for="title">Job Title <span class="required">*</span></label>
+        <input type="text" id="title" formControlName="title" placeholder="Enter your job title"
+          [class.is-invalid]="jobForm.get('title')?.invalid && jobForm.get('title')?.touched">
+        <div class="error-feedback" *ngIf="jobForm.get('title')?.invalid && jobForm.get('title')?.touched">
+          <span *ngIf="jobForm.get('title')?.errors?.['required']">Title is required.</span>
+          <span *ngIf="jobForm.get('title')?.errors?.['minlength']">Title must be at least 5 characters long.</span>
+        </div>
+      </div>
+
+      <!-- Category -->
+      <div class="form-group">
+        <label for="category">Category <span class="required">*</span></label>
+        <input type="text" id="category" formControlName="category" placeholder="enter your job category"
+          [class.is-invalid]="jobForm.get('category')?.invalid && jobForm.get('category')?.touched">
+        <div class="error-feedback" *ngIf="jobForm.get('category')?.invalid && jobForm.get('category')?.touched">
+          <span>Category is required.</span>
+        </div>
+      </div>
+
+      <!-- Budget -->
+      <div class="form-group">
+        <label for="budget">Budget ($) <span class="required">*</span></label>
+        <input type="number" id="budget" formControlName="budget" placeholder="500.00"
+          [class.is-invalid]="jobForm.get('budget')?.invalid && jobForm.get('budget')?.touched">
+        <div class="error-feedback" *ngIf="jobForm.get('budget')?.invalid && jobForm.get('budget')?.touched">
+          <span *ngIf="jobForm.get('budget')?.errors?.['required']">Budget is required.</span>
+          <span *ngIf="jobForm.get('budget')?.errors?.['min']">Budget must be at least $5.</span>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Detailed Description <span class="required">*</span></label>
+        <textarea id="description" formControlName="description" rows="6"
+          placeholder="Describe your project, required skills, and deliverables..."
+          [class.is-invalid]="jobForm.get('description')?.invalid && jobForm.get('description')?.touched"></textarea>
+        <div class="error-feedback" *ngIf="jobForm.get('description')?.invalid && jobForm.get('description')?.touched">
+          <span *ngIf="jobForm.get('description')?.errors?.['required']">Description is required.</span>
+          <span *ngIf="jobForm.get('description')?.errors?.['minlength']">Description must be at least 20 characters
+            long.</span>
+        </div>
+      </div>
+
+      <!-- Submit Actions -->
+      <div class="form-actions">
+        <!-- We use property binding [disabled] to visually show it's submitting, but we also check validity -->
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="isSubmitting">
+          <span *ngIf="!isSubmitting">Post Job</span>
+          <span *ngIf="isSubmitting" class="spinner-small"></span>
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

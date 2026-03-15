@@ -1,0 +1,68 @@
+<div class="postings-container">
+  
+  <header class="dashboard-header">
+    <div class="header-content">
+      <h1>My Job Postings</h1>
+      <p>Manage the projects you have published on SkillSwap.</p>
+    </div>
+    <div class="header-actions">
+      <!-- Link to our Create Job component -->
+      <a routerLink="/jobs/create" class="btn btn-primary">+ Post New Job</a>
+    </div>
+  </header>
+
+  <!-- Error Alert -->
+  <div class="alert alert-error" *ngIf="errorMessage">
+    <span class="icon">⚠️</span>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Main Content Area -->
+  <main class="postings-content">
+
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <p>Loading your jobs...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!isLoading && myJobs.length === 0 && !errorMessage">
+      <div class="empty-icon">📝</div>
+      <h3>No Postings Yet</h3>
+      <p>You haven't posted any jobs. Create your first project to find top freelancers.</p>
+      <a routerLink="/jobs/create" class="btn btn-primary mt-4">Post a Project Now</a>
+    </div>
+
+    <!-- Data List/Grid -->
+    <div class="job-list" *ngIf="!isLoading && myJobs.length > 0">
+      
+      <!-- List Items (Horizontal Card Layout) -->
+      <article class="job-list-item" *ngFor="let job of myJobs">
+        
+        <div class="item-main">
+          <div class="item-meta">
+            <span class="category-badge">{{ job.category }}</span>
+            <span class="status-badge" [ngClass]="job.status">{{ job.status.replace('_', ' ') | titlecase }}</span>
+          </div>
+          <h2 class="job-title">{{ job.title }}</h2>
+          <p class="job-budget">Budget: ${{ job.budget | number:'1.2-2' }}</p>
+          <p class="job-date">Posted: {{ job.created_at | date:'mediumDate' }}</p>
+        </div>
+
+        <div class="item-actions">
+          <div class="stats" *ngIf="job.status === 'in_progress'">
+            <span class="assigned-freelancer" *ngIf="job.assigned_freelancer">
+              👤 Working with: <strong>{{ job.assigned_freelancer.name }}</strong>
+            </span>
+          </div>
+          
+          <button class="btn btn-outline" [routerLink]="['/jobs', job.id]">Manage Job</button>
+        </div>
+
+      </article>
+
+    </div>
+  </main>
+
+</div>
