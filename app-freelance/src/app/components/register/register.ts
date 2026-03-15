@@ -16,6 +16,10 @@ export class Register {
   email = '';
   password = '';
   bio = '';
+  skills = '';
+
+  errorMsg = '';
+  suggestedUsername = '';
   skillsStr = '';
 
   errorMsg = '';
@@ -27,12 +31,17 @@ export class Register {
 
   submit() {
     this.errorMsg = '';
+    this.suggestedUsername = '';
 
     if (!this.name || !this.username || !this.email || !this.password) {
       this.errorMsg = 'Name, username, email, and password are required.';
       return;
     }
 
+    const skillsArray = this.skills
+      .split(',')
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
     const skillsArray = this.skillsStr
       .split(',')
       .map(s => s.trim())
@@ -47,6 +56,7 @@ export class Register {
           this.cdr.detectChanges();
         },
         error: (err) => {
+          this.errorMsg = err.error.error;
           console.error(err);
           if (err.error && err.error.message) {
             this.errorMsg = err.error.message;
@@ -54,6 +64,19 @@ export class Register {
             this.errorMsg = err.error.error;
           } else {
             this.errorMsg = 'Failed to register. Please try again.';
+          }
+
+          if (err.error && err.error.suggested_username) {
+            this.suggestedUsername = err.error.suggested_username;
+          } else if (
+            err.status === 409 ||
+            err.status === 400 ||
+            (err.error &&
+              typeof err.error.error === 'string' &&
+              err.error.error.toLowerCase().includes('already'))
+          ) {
+            const randomNum = Math.floor(Math.random() * 10000);
+            this.suggestedUsername = `${this.username}${randomNum}`;
           }
           this.cdr.detectChanges();
         },
