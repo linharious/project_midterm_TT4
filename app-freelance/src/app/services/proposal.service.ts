@@ -46,7 +46,7 @@ export class ProposalService {
 
   // Job Owner: Accept a proposal
   acceptProposal(proposalId: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${proposalId}/accept`, {}).pipe(
+    return this.http.patch(`${this.apiUrl}/${proposalId}/accept`, {}).pipe(
       catchError(this.handleError)
     );
   }

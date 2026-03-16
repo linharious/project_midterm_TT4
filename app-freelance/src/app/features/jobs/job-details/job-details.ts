@@ -5,12 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { JobService } from '../../../services/job.service';
 import { Job } from '../../../models/job.model';
 import { Auth } from '../../../services/auth';
+import { ProposalService } from '../../../services/proposal.service';
 import { SubmitProposalComponent } from '../../proposals/submit-proposal/submit-proposal';
 import { ProposalListComponent } from '../../proposals/proposal-list/proposal-list';
+import { Reviews } from '../../reviews/reviews';
 
 @Component({
   selector: 'app-job-details',
-  imports: [CommonModule, FormsModule, SubmitProposalComponent, ProposalListComponent],
+  imports: [CommonModule, FormsModule, SubmitProposalComponent, ProposalListComponent, Reviews],
   templateUrl: './job-details.html',
   styleUrl: './job-details.scss',
 })
@@ -19,11 +21,14 @@ export class JobDetails implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
+  private proposalService = inject(ProposalService);
   auth = inject(Auth);
 
   job: Job | null = null;
   isLoading = true;
   errorMessage = '';
+  acceptedFreelancerId: string | null = null;
+  acceptedFreelancerName: string | null = null;
 
   get currentUserId(): string | undefined {
     return this.auth.getCurrentUser()?.id;
@@ -48,6 +53,33 @@ export class JobDetails implements OnInit {
     this.jobService.getJobDetails(id).subscribe({
       next: (data) => {
         this.job = data;
+        
+        // Failsafe: if the job misses 'assigned_freelancer' but is in-progress/completed, 
+        // the owner can find the freelancer simply by looking at the accepted proposal!
+        if (this.currentUserId === this.job.owner?.id && (this.job.status === 'in_progress' || this.job.status === 'completed')) {
+          this.proposalService.getJobProposals(this.job.id).subscribe({
+            next: (proposals) => {
+              const accepted = proposals.find(p => p.status === 'accepted');
+              if (accepted) {
+                this.acceptedFreelancerId = accepted.freelancer_id || (accepted as any).user_id || null;
+                this.acceptedFreelancerName = accepted.freelancer?.name || 'Assigned Freelancer';
+                this.cdr.detectChanges();
+              }
+            }
+          });
+        } else if (this.currentUserId && this.currentUserId !== this.job.owner?.id && (this.job.status === 'in_progress' || this.job.status === 'completed')) {
+          // Freelancer failsafe: Check if they have an accepted bid for this job
+          this.proposalService.getMyBids().subscribe({
+            next: (bids) => {
+              const acceptedBid = bids.find(b => b.job_id === this.job!.id && b.status === 'accepted');
+              if (acceptedBid) {
+                this.acceptedFreelancerId = this.currentUserId!;
+                this.cdr.detectChanges();
+              }
+            }
+          });
+        }
+
         this.isLoading = false;
         this.cdr.detectChanges();
       },
@@ -109,6 +141,34 @@ export class JobDetails implements OnInit {
 
   goBack(): void {
     this.router.navigate(['/jobs/search']);
+  }
+
+  getReviewTarget(): { id: string; name: string } | null {
+    if (!this.job || !this.currentUserId || this.job.status !== 'completed') return null;
+
+    // Check if the current user is the owner
+    if (this.currentUserId === this.job.owner?.id) {
+      if (this.acceptedFreelancerId) {
+        return { id: this.acceptedFreelancerId, name: this.acceptedFreelancerName || 'Freelancer' };
+      }
+      if (typeof this.job.assigned_freelancer === 'string') {
+        return { id: this.job.assigned_freelancer, name: 'Freelancer' };
+      } else if (this.job.assigned_freelancer) {
+        return { id: this.job.assigned_freelancer.id, name: this.job.assigned_freelancer.name };
+      }
+    }
+    
+    // Check if the current user is the assigned freelancer
+    const isFreelancer = this.currentUserId === this.acceptedFreelancerId ||
+      (typeof this.job.assigned_freelancer === 'string' 
+        ? this.currentUserId === this.job.assigned_freelancer 
+        : this.currentUserId === this.job.assigned_freelancer?.id);
+
+    if (isFreelancer && this.job.owner) {
+      return { id: this.job.owner.id, name: this.job.owner.name };
+    }
+
+    return null;
   }
 }
 

@@ -118,10 +118,10 @@
       Person 3, place your component for rendering the Proposal List 
       OR the "Submit Proposal" form inside this section below.
     -->
-    <aside class="proposals-sidebar" id="proposals-section" *ngIf="job.status === 'open' || job.status === 'in_progress'">
+    <aside class="proposals-sidebar" id="proposals-section" *ngIf="job.status === 'open' || job.status === 'in_progress' || job.status === 'completed'">
       
       <!-- IF OWNER: Show Proposal List -->
-      <ng-container *ngIf="currentUserId === job.owner?.id">
+      <ng-container *ngIf="currentUserId === job.owner?.id && job.status !== 'completed'">
         <app-proposal-list 
           [jobId]="job.id"
           (proposalAccepted)="loadJobDetails(job.id)">
@@ -134,6 +134,16 @@
           [jobId]="job.id"
           (proposalSubmitted)="loadJobDetails(job.id)">
         </app-submit-proposal>
+      </ng-container>
+
+      <!-- IF COMPLETED: Show Review Form -->
+      <ng-container *ngIf="job.status === 'completed' && getReviewTarget()">
+        <app-reviews
+          [jobId]="job.id"
+          [targetId]="getReviewTarget()!.id"
+          [targetName]="getReviewTarget()!.name"
+          (reviewSubmitted)="loadJobDetails(job.id)">
+        </app-reviews>
       </ng-container>
 
     </aside>
