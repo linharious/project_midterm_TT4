@@ -1,0 +1,27 @@
+<div class="review-box" *ngIf="!successMessage">
+  <h3>Leave a Review for {{ targetName }}</h3>
+
+  <div class="alert alert-error" *ngIf="errorMessage">
+    <span class="icon">⚠️</span> {{ errorMessage }}
+  </div>
+
+  <form (ngSubmit)="submitReview()" class="review-form">
+    <div class="form-group">
+      <label>Rating (1-5 Stars)</label>
+      <div class="star-rating">
+        <label *ngFor="let star of [1, 2, 3, 4, 5]" class="star-label">
+          <input type="radio" [value]="star" name="rating" [(ngModel)]="rating" required />
+          <span class="star-text">{{ star }} ⭐</span>
+        </label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="isSubmitting || !rating">
+      {{ isSubmitting ? 'Submitting...' : 'Submit Review' }}
+    </button>
+  </form>
+</div>
+
+<div class="alert alert-success" style="margin-top: 2rem;" *ngIf="successMessage">
+  <span class="icon">✅</span> {{ successMessage }}
+</div>
