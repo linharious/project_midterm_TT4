@@ -16,13 +16,9 @@ export class Register {
   email = '';
   password = '';
   bio = '';
-  skills = '';
-
   errorMsg = '';
   suggestedUsername = '';
   skillsStr = '';
-
-  errorMsg = '';
   private cdr = inject(ChangeDetectorRef);
   constructor(
     private readonly auth: Auth,
@@ -38,10 +34,6 @@ export class Register {
       return;
     }
 
-    const skillsArray = this.skills
-      .split(',')
-      .map((s) => s.trim())
-      .filter((s) => s.length > 0);
     const skillsArray = this.skillsStr
       .split(',')
       .map(s => s.trim())
