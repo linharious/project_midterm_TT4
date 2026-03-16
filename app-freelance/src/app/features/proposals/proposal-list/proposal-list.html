@@ -1,0 +1,57 @@
+<div class="proposal-list-container">
+  <h3>Received Proposals</h3>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading proposals...</p>
+  </div>
+
+  <!-- Error Alert -->
+  <div class="alert alert-error" *ngIf="errorMessage && !isLoading">
+    <span class="icon">⚠️</span>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && !errorMessage && proposals.length === 0">
+    <p class="text-muted">No proposals have been submitted for this job yet.</p>
+  </div>
+
+  <!-- Proposals List -->
+  <div class="proposals-grid" *ngIf="!isLoading && proposals.length > 0">
+    <div class="proposal-card" *ngFor="let proposal of proposals" [ngClass]="{'accepted-card': proposal.status === 'accepted'}">
+      
+      <div class="proposal-header">
+        <div class="freelancer-info" *ngIf="proposal.freelancer">
+          <div class="avatar">{{ proposal.freelancer.name.charAt(0) }}</div>
+          <div class="details">
+            <span class="name">{{ proposal.freelancer.name }}</span>
+            <span class="username">@{{ proposal.freelancer.username }}</span>
+          </div>
+        </div>
+        
+        <div class="bid-amount">
+          Bid: <strong>${{ proposal.price | number:'1.2-2' }}</strong>
+        </div>
+      </div>
+
+      <div class="cover-letter">
+        <h4>Cover Letter</h4>
+        <p>{{ proposal.cover_letter }}</p>
+      </div>
+
+      <div class="proposal-footer" *ngIf="proposal.status === 'pending'">
+        <button class="btn btn-success btn-full" (click)="acceptProposal(proposal.id)">
+          Accept Proposal
+        </button>
+      </div>
+
+      <div class="proposal-footer accepted-footer" *ngIf="proposal.status === 'accepted'">
+        <span class="icon">🏆</span>
+        <strong>Proposal Accepted</strong>
+      </div>
+      
+    </div>
+  </div>
+</div>

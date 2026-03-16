@@ -6,6 +6,7 @@
   <ng-container *ngIf="isLoggedIn">
     <a routerLink="/jobs/create" routerLinkActive="active" class="nav-link">New Job</a>
     <a routerLink="/jobs/my-postings" routerLinkActive="active" class="nav-link">My Postings</a>
+    <a routerLink="/proposals/my-bids" routerLinkActive="active" class="nav-link">My Bids</a>
     <span class="nav-user"> Hello, {{ currentUser?.name }} </span>
     <button (click)="logout()" class="nav-link btn-logout">Logout</button>
   </ng-container>

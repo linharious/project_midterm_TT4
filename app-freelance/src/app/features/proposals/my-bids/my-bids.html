@@ -1,0 +1,51 @@
+<div class="my-bids-container">
+  <header class="dashboard-header">
+    <h1>My Active Bids</h1>
+    <p>Manage your submitted proposals and track their status.</p>
+  </header>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading your bids...</p>
+  </div>
+
+  <!-- Error Alert -->
+  <div class="alert alert-error" *ngIf="errorMessage && !isLoading">
+    <span class="icon">⚠️</span>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && !errorMessage && myBids.length === 0">
+    <div class="empty-icon">📝</div>
+    <h3>No Bids Found</h3>
+    <p>You haven't submitted any proposals yet.</p>
+    <button class="btn btn-primary mt-4" routerLink="/jobs/search">Find Projects</button>
+  </div>
+
+  <!-- Bids List -->
+  <div class="bids-list" *ngIf="!isLoading && myBids.length > 0">
+    <div class="bid-card" *ngFor="let bid of myBids">
+      <div class="card-header">
+        <span class="status-badge" [ngClass]="bid.status">{{ bid.status | titlecase }}</span>
+        <span class="date">{{ bid.created_at | date:'mediumDate' }}</span>
+      </div>
+      
+      <div class="bid-details">
+        <div class="bid-amount">Bid Amount: <strong>${{ bid.price | number:'1.2-2' }}</strong></div>
+        <div class="cover-letter-preview">
+          <h4>Your Cover Letter</h4>
+          <p>{{ bid.cover_letter | slice:0:150 }}{{ bid.cover_letter.length > 150 ? '...' : '' }}</p>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn btn-outline btn-sm" [routerLink]="['/jobs', bid.job_id]">View Job</button>
+        <button class="btn btn-danger btn-sm" *ngIf="bid.status === 'pending'" (click)="retractBid(bid.id)">
+          Retract Bid
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

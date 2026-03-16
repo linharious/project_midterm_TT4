@@ -1,0 +1,24 @@
+<div class="submit-proposal-container">
+  <h3>Apply for this Project</h3>
+  
+  <div class="alert alert-error" *ngIf="errorMessage">
+    <span class="icon">⚠️</span>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <form (ngSubmit)="submitProposal()">
+    <div class="form-group">
+      <label>Your Bid Amount ($)</label>
+      <input type="number" [(ngModel)]="price" name="price" required min="1" placeholder="Enter your proposed budget">
+    </div>
+
+    <div class="form-group">
+      <label>Cover Letter / Pitch</label>
+      <textarea [(ngModel)]="coverLetter" name="coverLetter" rows="5" required placeholder="Why are you the best fit for this project?"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+      {{ isSubmitting ? 'Submitting...' : 'Submit Proposal' }}
+    </button>
+  </form>
+</div>

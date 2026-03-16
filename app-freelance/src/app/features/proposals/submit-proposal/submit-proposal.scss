@@ -1,0 +1,103 @@
+.submit-proposal-container {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 1rem;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  input, textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+    background-color: #f9fafb;
+    font-size: 0.95rem;
+    color: #111827;
+    transition: all 0.2s ease;
+    font-family: inherit;
+
+    &:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      background-color: white;
+    }
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  // Hide the up/down spin buttons on number inputs
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  font-family: inherit;
+
+  &.btn-primary {
+    background-color: #2563eb;
+    color: white;
+    width: 100%;
+    &:hover:not(:disabled) { background-color: #1d4ed8; }
+    &:disabled { opacity: 0.6; cursor: not-allowed; }
+  }
+}
+
+.alert-error {
+  background-color: #fef2f2;
+  border-left: 4px solid #ef4444;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  p { color: #b91c1c; font-weight: 500; margin: 0; font-size: 0.9rem; }
+}

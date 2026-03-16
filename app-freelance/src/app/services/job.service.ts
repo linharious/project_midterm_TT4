@@ -16,12 +16,6 @@ export class JobService {
 
   constructor() {}
 
-  private getAuthHeaders() {
-    return {
-      headers: this.auth.getAuthHeaders()
-    };
-  }
-
   private handleError(error: any) {
     let errorMessage = 'An unknown error occurred!';
     
@@ -48,31 +42,31 @@ export class JobService {
   }
 
   createJob(jobData: CreateJobDto): Observable<Job> {
-    return this.http.post<Job>(this.apiUrl, jobData, this.getAuthHeaders()).pipe(
+    return this.http.post<Job>(this.apiUrl, jobData).pipe(
       catchError(this.handleError)
     );
   }
 
   getJobDetails(jobId: string): Observable<Job> {
-    return this.http.get<Job>(`${this.apiUrl}/${jobId}`, this.getAuthHeaders()).pipe(
+    return this.http.get<Job>(`${this.apiUrl}/${jobId}`).pipe(
       catchError(this.handleError)
     );
   }
 
   updateJob(jobId: string, updates: UpdateJobDto): Observable<Job> {
-    return this.http.patch<Job>(`${this.apiUrl}/${jobId}`, updates, this.getAuthHeaders()).pipe(
+    return this.http.patch<Job>(`${this.apiUrl}/${jobId}`, updates).pipe(
       catchError(this.handleError)
     );
   }
 
   getMyPostings(): Observable<Job[]> {
-    return this.http.get<Job[]>(`${this.apiUrl}/my-postings`, this.getAuthHeaders()).pipe(
+    return this.http.get<Job[]>(`${this.apiUrl}/my-postings`).pipe(
       catchError(this.handleError)
     );
   }
 
   completeJob(jobId: string): Observable<any> {
-    return this.http.patch(`${this.apiUrl}/${jobId}/complete`, {}, this.getAuthHeaders()).pipe(
+    return this.http.patch(`${this.apiUrl}/${jobId}/complete`, {}).pipe(
       catchError(this.handleError)
     );
   }

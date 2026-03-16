@@ -1,0 +1,135 @@
+.proposal-list-container {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.75rem;
+  }
+}
+
+.proposals-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.proposal-card {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+  &.accepted-card {
+    border-color: #10b981;
+    background-color: #f0fdf4;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  }
+
+  .proposal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed #e5e7eb;
+  }
+
+  .freelancer-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .details {
+      display: flex;
+      flex-direction: column;
+
+      .name { font-weight: 700; color: #111827; font-size: 1rem; }
+      .username { font-size: 0.8rem; color: #6b7280; }
+    }
+  }
+
+  .bid-amount {
+    font-size: 0.95rem;
+    color: #4b5563;
+    strong {
+      color: #059669;
+      font-size: 1.15rem;
+      font-weight: 800;
+      display: block;
+    }
+  }
+
+  .cover-letter {
+    margin-bottom: 1.25rem;
+    
+    h4 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #9ca3af;
+      margin: 0 0 0.5rem 0;
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: #374151;
+      line-height: 1.6;
+      margin: 0;
+      white-space: pre-wrap;
+    }
+  }
+}
+
+/* Utilities */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  font-family: inherit;
+
+  &.btn-full { width: 100%; }
+  &.btn-success { background-color: #10b981; color: white; &:hover { background-color: #059669; } }
+}
+
+.accepted-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: #d1fae5;
+  color: #065f46;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.text-muted { color: #6b7280; text-align: center; padding: 2rem 0; font-style: italic; }
+.alert-error { background-color: #fef2f2; border-left: 4px solid #ef4444; padding: 1rem; border-radius: 0.5rem; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; p { color: #b91c1c; font-weight: 500; margin: 0; font-size: 0.9rem; } }
+.loading-state { display: flex; flex-direction: column; align-items: center; padding: 3rem 1rem; p { color: #6b7280; font-size: 0.95rem; } }
+.spinner { width: 30px; height: 30px; border: 3px solid #f3f3f3; border-top: 3px solid #3b82f6; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }

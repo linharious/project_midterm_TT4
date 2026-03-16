@@ -118,14 +118,24 @@
       Person 3, place your component for rendering the Proposal List 
       OR the "Submit Proposal" form inside this section below.
     -->
-    <aside class="proposals-sidebar" id="proposals-section-placeholder">
-      <div class="placeholder-content">
-        <h3>Proposals</h3>
-        <p class="integration-note">
-          <strong>Person 3:</strong> Inject your <code>&lt;app-proposals-list&gt;</code> or
-          <code>&lt;app-submit-proposal&gt;</code> component here.
-        </p>
-      </div>
+    <aside class="proposals-sidebar" id="proposals-section" *ngIf="job.status === 'open' || job.status === 'in_progress'">
+      
+      <!-- IF OWNER: Show Proposal List -->
+      <ng-container *ngIf="currentUserId === job.owner?.id">
+        <app-proposal-list 
+          [jobId]="job.id"
+          (proposalAccepted)="loadJobDetails(job.id)">
+        </app-proposal-list>
+      </ng-container>
+
+      <!-- IF FREELANCER: Show Submit Form -->
+      <ng-container *ngIf="currentUserId !== job.owner?.id && job.status === 'open'">
+        <app-submit-proposal 
+          [jobId]="job.id"
+          (proposalSubmitted)="loadJobDetails(job.id)">
+        </app-submit-proposal>
+      </ng-container>
+
     </aside>
 
   </div>

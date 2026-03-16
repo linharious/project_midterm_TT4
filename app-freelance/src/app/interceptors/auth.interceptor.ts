@@ -1,31 +1,19 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { Auth } from '../services/auth';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(Auth);
-  const router = inject(Router);
   const token = authService.getToken();
 
-  let modifiedReq = req;
+  // If we have a token, clone the request and add the Authorization header
   if (token) {
-    modifiedReq = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`
-      }
+    const authReq = req.clone({
+      headers: req.headers.set('Authorization', `Bearer ${token}`)
     });
+    return next(authReq);
   }
 
-  return next(modifiedReq).pipe(
-    catchError((error) => {
-      if (error.status === 401) {
-        authService.clearToken();
-        router.navigate(['/login']);
-      }
-      return throwError(() => error);
-    })
-  );
+  // If no token exists, just send the original request
+  return next(req);
 };

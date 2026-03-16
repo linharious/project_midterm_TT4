@@ -4,10 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { JobService } from '../../../services/job.service';
 import { Job } from '../../../models/job.model';
+import { Auth } from '../../../services/auth';
+import { SubmitProposalComponent } from '../../proposals/submit-proposal/submit-proposal';
+import { ProposalListComponent } from '../../proposals/proposal-list/proposal-list';
 
 @Component({
   selector: 'app-job-details',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SubmitProposalComponent, ProposalListComponent],
   templateUrl: './job-details.html',
   styleUrl: './job-details.scss',
 })
@@ -16,10 +19,15 @@ export class JobDetails implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
+  auth = inject(Auth);
 
   job: Job | null = null;
   isLoading = true;
   errorMessage = '';
+
+  get currentUserId(): string | undefined {
+    return this.auth.getCurrentUser()?.id;
+  }
 
   isEditing = false;
   isSaving = false;
